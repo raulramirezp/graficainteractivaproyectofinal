@@ -1,14 +1,17 @@
 var finishFirsLevel = 4950;
-var level1 = {
 
+var attack, kill;
+
+var level1 = {
     preload: function() { // primero carga todas las imágenes
         game.load.image("background", "assets/backgroundlevel1.png");
         game.load.spritesheet("player", "assets/dogSequence2.png ", 125, 118);
         game.load.image("woofwave", "assets/woofWave.png ", 125, 118);
         game.load.image("enemy1", "assets/enemy2.png ", 125, 118);
-        //    game.load.audio("woofSound", "assets/woofWave.ogg");
+        game.load.audio("attack", "assets/Dog-woof-single-sound.mp3");
+        game.load.audio("kill", "assets/enemy-bork.mp3");
+        game.load.audio("world-music", "assets/world-music.mp3");
     },
-
 
     create: function() { // crea los actores y muestra las imágenes
         game.world.setBounds(0, 0, 11446, 800);
@@ -33,8 +36,12 @@ var level1 = {
         player.body.bounce.y = 0.3;
         player.body.gravity.y = 800;
 
+        attack = game.add.audio('attack');
+        kill = game.add.audio('kill');
+        
+        game.sound.setDecodedCallback([ attack, kill ], start, this).then();
     },
-
+    
     update: function() {
         isLevelFinish();
         player.animations.play("caminar");
@@ -76,9 +83,7 @@ var level1 = {
     },
 
     render: function() {
-
         game.debug.cameraInfo(game.camera, 32, 32);
-
     }
 }
 
@@ -133,6 +138,7 @@ function runToLeft() {
 
 function shotPower() {
     if (woofPower == null) {
+        playFx("attack")
         woofPower = game.add.sprite(player.position.x + 10, game.height - 20, "woofwave");
         woofPower.anchor.setTo(0, 1);
         woofPower.scale.setTo(1 * direction, 1);
@@ -178,6 +184,7 @@ function killEnemy() {
                 woofPower = null;
                 enemy.body.gravity.y = 800;
                 enemy.position.x = -200;
+                playFx("kill");
             }
         }
 
@@ -199,3 +206,7 @@ function isLevelFinish() {
         game.state.start("NextLevel2");
     }
 }
+
+const playFx = soundFx => {
+    this[soundFx].play()
+};
