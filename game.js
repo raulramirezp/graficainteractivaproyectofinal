@@ -21,6 +21,7 @@ var floor;
 var woofPower = null;
 var woofPowerSound;
 var enemies = [];
+var timer;
 
 game.state.add("MainMenu", mainMenu);
 game.state.add("GameOver", gameOver);

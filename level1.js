@@ -6,7 +6,7 @@ var level1 = {
         game.load.spritesheet("player", "assets/dogSequence2.png ", 125, 118);
         game.load.image("woofwave", "assets/woofWave.png ", 125, 118);
         game.load.image("enemy1", "assets/enemy2.png ", 125, 118);
-        //    game.load.audio("woofSound", "assets/woofWave.ogg");
+        //game.load.audio("woofSound", "assets/woofWave.ogg");
     },
 
 

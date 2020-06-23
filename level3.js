@@ -1,4 +1,6 @@
 finishFirsLevel = 4950; //5730
+var woofEnemyPower;
+
 var level3 = {
 
     preload: function() { // primero carga todas las imágenes
@@ -6,6 +8,7 @@ var level3 = {
         game.load.spritesheet("player", "assets/dogSequence2.png ", 125, 118);
         game.load.image("woofwave", "assets/woofWave.png ", 125, 118);
         game.load.image("enemy1", "assets/enemy2.png ", 125, 118);
+        game.load.image("cheems", "assets/cheems.png ", 125, 118);
     },
 
 
@@ -20,6 +23,8 @@ var level3 = {
         numberOfEnemies = 25;
         createEnemies(numberOfEnemies);
 
+
+        cheems = game.add.sprite(5000, game.height - 20 + i * 2, "cheems");
         rightButton = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT); // activa la tecla derecha
         leftBUtton = game.input.keyboard.addKey(Phaser.Keyboard.LEFT); // activa la tecla izquierda
         jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.UP);
@@ -32,6 +37,9 @@ var level3 = {
         player.body.bounce.y = 0.3;
         player.body.gravity.y = 800;
 
+        var intervalID = window.setInterval(enemyFire, 3000);
+
+
     },
 
     update: function() {
@@ -43,14 +51,14 @@ var level3 = {
             killEnemy();
         }
 
+        updateEnemyFire();
+
         enemies.forEach(theEnemy => {
             if (theEnemy.position.x > -200) {
                 theEnemy.position.x -= 1;
             }
         });
 
-
-        console.log("player pos ", player.position.x);
         samePosition();
 
         if (rightButton.isDown) {
@@ -86,5 +94,20 @@ var level3 = {
 function finishGame() {
     if (game.camera.x >= finishFirsLevel) {
         game.state.start("GameFinished");
+    }
+}
+
+function enemyFire() {
+    if (woofEnemyPower == null) {
+        woofEnemyPower = game.add.sprite(player.position.x + 800, game.height - 20, "woofwave");
+        woofEnemyPower.anchor.setTo(0, 1);
+        woofEnemyPower.scale.setTo(-1, 1);
+    }
+}
+
+
+function updateEnemyFire() {
+    if (woofEnemyPower != null) {
+        woofEnemyPower.position.x -= 3;
     }
 }
