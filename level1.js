@@ -83,7 +83,11 @@ var level1 = {
     },
 
     render: function() {
-        game.debug.cameraInfo(game.camera, 32, 32);
+        game.debug.text("ATACAR: BARRA ESPACIADORA", 32, 32);
+        game.debug.text("CORRER: CONTROL", 32, 52);
+        game.debug.text("MOVERSE ADELANTE: Flecha izquierda", 32, 72);
+        game.debug.text("MOVERSE ATRAS: Flecha derecha", 32, 92);
+        game.debug.text("SALTAR: Flecha arriba", 32, 112);
     }
 }
 
